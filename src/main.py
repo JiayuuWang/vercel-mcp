@@ -1,36 +1,11 @@
-"""Vercel MCP Server - Type 3 DAuth implementation."""
+# Copyright (c) 2026 Dedalus Labs, Inc. and its contributors
+# SPDX-License-Identifier: MIT
 
-from dedalus_mcp import MCPServer
+from dotenv import load_dotenv
 
-from .vercel.tools import (
-    list_projects,
-    get_project,
-    list_deployments,
-    get_deployment,
-    create_deployment,
-    cancel_deployment,
-    get_deployment_logs,
-    list_domains,
-    list_env_vars,
-    update_env_var,
-)
-
-server = MCPServer("vercel-mcp")
-
-server.collect(
-    list_projects,
-    get_project,
-    list_deployments,
-    get_deployment,
-    create_deployment,
-    cancel_deployment,
-    get_deployment_logs,
-    list_domains,
-    list_env_vars,
-    update_env_var,
-)
-
+load_dotenv()
+import asyncio
+from server import main
 
 if __name__ == "__main__":
-    import asyncio
-    asyncio.run(server.serve())
+    asyncio.run(main())

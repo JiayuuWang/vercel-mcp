@@ -1,3 +1,5 @@
-"""Dedalus Labs Vercel MCP Server."""
+# Copyright (c) 2026 Dedalus Labs, Inc. and its contributors
+# SPDX-License-Identifier: MIT
+from .vercel import vercel, vercel_tools
 
-__version__ = "0.1.0"
+__all__ = ["vercel", "vercel_tools"]
