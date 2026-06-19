@@ -89,6 +89,7 @@ async def _run_tool(runner, creds, tool_name: str, instruction: str) -> bool:
             mcp_servers=[MCP_SERVER_SLUG],
             credentials=creds,
             max_steps=6,
+            max_tokens=4096,
         )
         output = getattr(result, "output", str(result)) or ""
         print(output[:600])
