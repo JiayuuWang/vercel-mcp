@@ -15,7 +15,7 @@ Required environment variables:
 Optional:
     DEDALUS_API_URL   Override Dedalus API base (default https://api.dedaluslabs.ai)
     DEDALUS_AS_URL    Override Dedalus AS base  (default https://as.dedaluslabs.ai)
-    MCP_SERVER_SLUG   Marketplace slug (default JiayuuWang/vercel-mcp)
+    MCP_SERVER_SLUG   Marketplace slug (default JiayuWang/vercel-mcp)
     VERCEL_TEAM_ID    Vercel team id, forwarded to the server if set
 
 Usage:
@@ -38,7 +38,7 @@ DEDALUS_API_KEY = os.getenv("DEDALUS_API_KEY", "")
 DEDALUS_API_URL = os.getenv("DEDALUS_API_URL", "https://api.dedaluslabs.ai")
 DEDALUS_AS_URL = os.getenv("DEDALUS_AS_URL", "https://as.dedaluslabs.ai")
 VERCEL_TOKEN = os.getenv("VERCEL_TOKEN", "")
-MCP_SERVER_SLUG = os.getenv("MCP_SERVER_SLUG", "JiayuuWang/vercel-mcp")
+MCP_SERVER_SLUG = os.getenv("MCP_SERVER_SLUG", "JiayuWang/vercel-mcp")
 MODEL = os.getenv("DEDALUS_TEST_MODEL", "anthropic/claude-sonnet-4-5")
 
 # Every tool the server exposes, with a deterministic natural-language
