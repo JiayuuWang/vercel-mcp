@@ -76,6 +76,8 @@ def _passed(tool_name: str, output: str) -> bool:
         "no active context",
         "modulenotfounderror",
         "importerror",
+        "currently unavailable",
+        "mcp server",
     )
     return not any(marker in lowered for marker in hard_failures)
 
