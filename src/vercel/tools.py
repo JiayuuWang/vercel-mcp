@@ -7,7 +7,7 @@ from typing import Optional, Any
 
 
 vercel = Connection(
-    name="JiayuWang-vercel-mcp",
+    name="vercel",
     secrets=SecretKeys(token="VERCEL_TOKEN"),
     base_url="https://api.vercel.com",
     auth_header_format="Bearer {api_key}",
