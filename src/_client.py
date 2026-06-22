@@ -122,7 +122,7 @@ async def main() -> int:
     from dedalus_labs import AsyncDedalus, DedalusRunner
     from dedalus_mcp.auth import SecretValues
 
-    creds = [SecretValues(_rebind(vercel, MCP_SERVER_SLUG), token=VERCEL_TOKEN)]
+    creds = [SecretValues(vercel, token=VERCEL_TOKEN)]
 
     client = AsyncDedalus(
         api_key=DEDALUS_API_KEY,
