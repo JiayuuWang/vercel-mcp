@@ -46,7 +46,7 @@ DEDALUS_API_KEY = os.getenv("DEDALUS_API_KEY", "")
 DEDALUS_API_URL = os.getenv("DEDALUS_API_URL", "https://api.dedaluslabs.ai")
 DEDALUS_AS_URL = os.getenv("DEDALUS_AS_URL", "https://as.dedaluslabs.ai")
 VERCEL_TOKEN = os.getenv("VERCEL_TOKEN", "")
-MCP_SERVER_SLUG = os.getenv("MCP_SERVER_SLUG", "JiayuWang/vercel-mcp")
+MCP_SERVER_SLUG = os.getenv("MCP_SERVER_SLUG", "JiayuWang(王嘉宇)/vercel-mcp")
 MODEL = os.getenv("DEDALUS_TEST_MODEL", "anthropic/claude-sonnet-4-5")
 
 # Every tool the server exposes, with a deterministic natural-language
@@ -122,7 +122,8 @@ async def main() -> int:
     from dedalus_labs import AsyncDedalus, DedalusRunner
     from dedalus_mcp.auth import SecretValues
 
-    creds = [SecretValues(vercel, token=VERCEL_TOKEN)]
+    # Use _rebind to dynamically compute connection name from actual marketplace slug
+    creds = [SecretValues(_rebind(vercel, MCP_SERVER_SLUG), token=VERCEL_TOKEN)]
 
     client = AsyncDedalus(
         api_key=DEDALUS_API_KEY,
