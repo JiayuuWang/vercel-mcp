@@ -46,7 +46,7 @@ DEDALUS_API_KEY = os.getenv("DEDALUS_API_KEY", "")
 DEDALUS_API_URL = os.getenv("DEDALUS_API_URL", "https://api.dedaluslabs.ai")
 DEDALUS_AS_URL = os.getenv("DEDALUS_AS_URL", "https://as.dedaluslabs.ai")
 VERCEL_TOKEN = os.getenv("VERCEL_TOKEN", "")
-MCP_SERVER_SLUG = os.getenv("MCP_SERVER_SLUG", "JiayuWang(王嘉宇)/vercel-mcp")
+MCP_SERVER_SLUG = os.getenv("MCP_SERVER_SLUG", "JiayuWang/vercel-mcp")
 MODEL = os.getenv("DEDALUS_TEST_MODEL", "anthropic/claude-sonnet-4-5")
 
 # Every tool the server exposes, with a deterministic natural-language
