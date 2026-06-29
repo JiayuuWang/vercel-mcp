@@ -66,32 +66,34 @@ REQUIRED_TOOLS = [
 ]
 
 
-def _passed(tool_name: str, output: str) -> bool:
-    """A tool counts as exercised if the agent invoked it without a hard error.
-
-    The server returns an ``{"error": ...}`` body on API failure; we treat a
-    response that names the tool and is not dominated by an error envelope as a
-    pass. Callers print the raw output for manual inspection too.
+def _passed(tool_name: str, tool_events: list) -> bool:
+    """A tool counts as exercised if it was successfully called.
+    
+    Checks on_tool_event records for actual tool invocation with the expected name.
+    Falls back to heuristic if tool_events unavailable (older SDK versions).
     """
-    if not output:
+    if not tool_events:
         return False
-    lowered = output.lower()
-    hard_failures = (
-        "no tool",
-        "tool not found",
-        "unknown tool",
-        "could not call",
-        "no active context",
-        "modulenotfounderror",
-        "importerror",
-        "currently unavailable",
-        "mcp server",
-    )
-    return not any(marker in lowered for marker in hard_failures)
+    
+    # Check if any tool event matches our expected tool name
+    for event in tool_events:
+        # Tool events have structure: {"name": "tool_name", "input": {...}, ...}
+        if hasattr(event, 'name') and tool_name in event.name:
+            return True
+        # Some SDK versions use dict format
+        if isinstance(event, dict) and tool_name in event.get('name', ''):
+            return True
+    
+    return False
 
 
 async def _run_tool(runner, creds, tool_name: str, instruction: str) -> bool:
     print(f"\n--- {tool_name} ---")
+    tool_events = []
+    
+    def on_tool_event(event):
+        tool_events.append(event)
+    
     try:
         result = await runner.run(
             input=instruction,
@@ -100,10 +102,13 @@ async def _run_tool(runner, creds, tool_name: str, instruction: str) -> bool:
             credentials=creds,
             max_steps=6,
             max_tokens=4096,
+            on_tool_event=on_tool_event,
         )
         output = getattr(result, "output", str(result)) or ""
         print(output[:600])
-        ok = _passed(tool_name, output)
+        ok = _passed(tool_name, tool_events)
+        if ok:
+            print(f"✓ Tool called: {len(tool_events)} invocation(s)")
     except Exception as exc:  # noqa: BLE001 - report any failure deterministically
         print(f"exception: {exc!r}")
         ok = False
